@@ -27,6 +27,7 @@ import io.qameta.allure.entity.Statistic;
 import io.qameta.allure.entity.Status;
 import io.qameta.allure.entity.TestResult;
 import io.qameta.allure.executor.ExecutorPlugin;
+import io.qameta.allure.Aggregator;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -179,7 +180,7 @@ public class HistoryPlugin extends CommonJsonAggregator2 implements Reader {
         result.setNewPassed(isNewPassed(current, prevItems));
 
         final List<HistoryItem> newItems = Stream.concat(Stream.of(current), prevItems.stream())
-                .limit(20)
+                .limit(Aggregator.resultsLimit())
                 .collect(Collectors.toList());
         data.setItems(newItems);
     }

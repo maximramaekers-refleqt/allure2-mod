@@ -25,6 +25,8 @@ import io.qameta.allure.entity.Statistic;
 import io.qameta.allure.entity.TestResult;
 import io.qameta.allure.executor.ExecutorPlugin;
 import io.qameta.allure.trend.AbstractTrendPlugin;
+import io.qameta.allure.Aggregator;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -65,7 +67,7 @@ public class HistoryTrendPlugin extends AbstractTrendPlugin<HistoryTrendItem> {
         final List<HistoryTrendItem> data = getHistoryItems(launchesResults);
 
         return Stream.concat(Stream.of(item), data.stream())
-                .limit(20)
+                .limit(Aggregator.resultsLimit())
                 .collect(Collectors.toList());
     }
 

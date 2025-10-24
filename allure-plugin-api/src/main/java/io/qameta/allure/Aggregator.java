@@ -20,7 +20,9 @@ import io.qameta.allure.core.LaunchResults;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.security.cert.Extension;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Aggregator extension. Can be used to process results and/or generate
@@ -32,6 +34,18 @@ import java.util.List;
 @FunctionalInterface
 @Deprecated
 public interface Aggregator extends Extension {
+
+        /**
+     * Configure the number of items to be rendered on different charts.
+     *
+     * @return RESULTS_LIMIT provided by user, or a default value = 20.
+     */
+    static long resultsLimit() {
+        return Optional.ofNullable(System.getenv("ALLURE_RESULTS_LIMIT"))
+                .map(Long::parseLong)
+                .orElse(50L);
+    }
+
 
     /**
      * Process report data.
